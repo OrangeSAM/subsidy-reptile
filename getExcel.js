@@ -58,14 +58,14 @@ const getExcel = function (page = "") {
                                     }/${hrefSplit2[1]}`;
                                 fileCount = fileCount + 1;
                                 bulletinResult.push({
-                                    title: fileCount + fileName,
+                                    title: fileCount + ' ' + fileName,
                                     url: downloadUrl
                                 });
-                                fs.writeFileSync("result1.json", JSON.stringify(bulletinResult));
+                                // fs.writeFileSync("result1.json", JSON.stringify(bulletinResult));
 
-                                // downloadExcel(downloadUrl, fileName, function () {
-                                //     console.log(`${fileName}下载完毕`);
-                                // });
+                                downloadExcel(downloadUrl, fileName, function () {
+                                    console.log(`${fileName}下载完毕`);
+                                });
                                 console.log(fileCount);
                             }
                         }
@@ -76,7 +76,7 @@ const getExcel = function (page = "") {
     );
 };
 
-// 文件下载
+// 文件下载方法
 function downloadExcel(url, filename, callback) {
     var stream = fs.createWriteStream(path.join('./excelFile', filename));
     request(url)
@@ -84,6 +84,7 @@ function downloadExcel(url, filename, callback) {
         .on("close", callback);
 }
 
+// 启动器
 // 目前公示列表有30页
 for (let i = 0; i < 30; i++) {
     if (i === 0) {
